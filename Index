@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Sons of Liberty Flag</title> 
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+    }
+
+    .flag-container {
+        margin-bottom: 20px;
+    }
+
+    .flag {
+        width: 800px;
+        height: 400px;
+        position: relative;
+        border: 2px solid black;
+        overflow: hidden;
+    }
+
+    .stripe {
+        width: 100%;
+        height: calc(100% / 13);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+    }
+
+    .stripe:nth-child(odd) {
+        background-color: #ff2400; /* Scarlet red */
+        color: white;
+    }
+
+    .stripe:nth-child(even) {
+        background-color: #ffffff; /* White */
+        color: black;
+    }
+
+    .quote {
+        font-size: 18px;
+        font-style: italic;
+        text-align: center;
+        max-width: 600px;
+    }
+</style> 
+ </head> 
+ <body> 
+  <div class="flag-container"> 
+   <div class="flag"> <!-- 13 stripes --> 
+    <div class="stripe"> <span>Sons of Liberty</span> 
+    </div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"></div> 
+    <div class="stripe"> <span>Give me Liberty or Give me Death</span> 
+    </div> 
+    <div class="stripe"></div> 
+   </div> 
+  </div> 
+  <div class="quote" id="quote"> <!-- Quote will be inserted here --> 
+  </div> 
+  <script>
+    // Array of quotes from founding fathers
+    var quotes = [
+    "Liberty, when it begins to take root, is a plant of rapid growth. - George Washington",
+    "We hold these truths to be self-evident: that all men are created equal; that they are endowed by their Creator with certain unalienable rights; that among these are life, liberty, and the pursuit of happiness. - Thomas Jefferson",
+    "Those who deny freedom to others deserve it not for themselves. - Abraham Lincoln",
+    "The tree of liberty must be refreshed from time to time with the blood of patriots and tyrants. - Thomas Jefferson",
+    "The price of freedom is eternal vigilance. - Thomas Jefferson",
+    "Government's first duty is to protect the people, not run their lives. - Ronald Reagan",
+    "Freedom is never more than one generation away from extinction. We didn't pass it to our children in the bloodstream. It must be fought for, protected, and handed on for them to do the same. - Ronald Reagan",
+    "The Constitution is the guide which I never will abandon. - George Washington",
+    "In the truest sense, freedom cannot be bestowed; it must be achieved. - Franklin D. Roosevelt",
+    "A constitution of government once changed from freedom can never be restored. Liberty, once lost, is lost forever. - John Adams",
+    "America will never be destroyed from the outside. If we falter and lose our freedoms, it will be because we destroyed ourselves. - Abraham Lincoln",
+    "Liberty means responsibility. That is why most men dread it. - George Bernard Shaw",
+    "Freedom is the oxygen of the soul. - Moshe Dayan",
+    "Freedom is the power to choose our own chains. - Jean Jacques Rousseau",
+    "Freedom is the open window through which pours the sunlight of the human spirit and human dignity. - Herbert Hoover",
+    "The greatest glory of a free-born people is to transmit that freedom to their children. - William Havard",
+    "Freedom is never voluntarily given by the oppressor; it must be demanded by the oppressed. - Martin Luther King Jr.",
+    "Liberty has never come from the government. Liberty has always come from the subjects of it. The history of liberty is a history of resistance. - Woodrow Wilson",
+    "The essence of America — that which really unites us — is not ethnicity, or nationality, or religion. It is an idea — and what an idea it is: that you can come from humble circumstances and do great things. - Condoleezza Rice",
+    "The beauty of the Second Amendment is that it will not be needed until they try to take it. - Thomas Jefferson",
+    "Guard with jealous attention the public liberty. Suspect everyone who approaches that jewel. - Patrick Henry",
+    "The Constitution shall never be construed to prevent the people of the United States who are peaceable citizens from keeping their own arms. - Samuel Adams",
+    "Those who would give up essential liberty to purchase a little temporary safety deserve neither liberty nor safety. - Benjamin Franklin",
+    "America was not built on fear. America was built on courage, on imagination, and an unbeatable determination to do the job at hand. - Harry S. Truman",
+    "The flag is the embodiment, not of sentiment, but of history. - Woodrow Wilson",
+    "Freedom is never more than one generation away from extinction. We didn't pass it to our children in the bloodstream. It must be fought for, protected, and handed on for them to do the same. - Ronald Reagan",
+    "This country will not be a good place for any of us to live in unless we make it a good place for all of us to live in. - Theodore Roosevelt",
+    "My dream is of a place and a time where America will once again be seen as the last best hope of earth. - Abraham Lincoln",
+    "Freedom is nothing but a chance to be better. - Albert Camus",
+    "The advancement and diffusion of knowledge is the only guardian of true liberty. - James Madison",
+    "Liberty is the breath of life to nations. - George Bernard Shaw",
+    "Those who deny freedom to others deserve it not for themselves. - Abraham Lincoln",
+    "Where liberty dwells, there is my country. - Benjamin Franklin",
+    "I have cherished the ideal of a democratic and free society in which all persons live together in harmony and with equal opportunities. It is an ideal which I hope to live for and to achieve. But if needs be, it is an ideal for which I am prepared to die. - Nelson Mandela",
+    "Freedom is not worth having if it does not include the freedom to make mistakes. - Mahatma Gandhi",
+    "Liberty is the right to choose. Freedom is the result of the right choice. - Jules Renard",
+    "The Constitution is not an instrument for the government to restrain the people, it is an instrument for the people to restrain the government - lest it come to dominate our lives and interests. - Patrick Henry",
+    "We are a nation of many nationalities, many races, many religions — bound together by a single unity, the unity of freedom and equality. Whoever seeks to set one nationality against another, seeks to degrade all nationalities. - Franklin D. Roosevelt",
+    "The United States is the only country with a known birthday. - James G. Blaine",
+    "I am an American; free born and free bred, where I acknowledge no man as my superior, except for his own worth, or as my inferior, except for his own demerit. - Theodore Roosevelt",
+    "We must be free not because we claim freedom, but because we practice it. - William Faulkner",
+    "Our greatest happiness does not depend on the condition of life in which chance has placed us, but is always the result of a good conscience, good health, occupation, and freedom in all just pursuits. - Thomas Jefferson",
+    "The strength of a nation lies in the homes of its people. - Abraham Lincoln",
+    "I would rather be exposed to the inconveniences attending too much liberty than to those attending too small a degree of it. - Thomas Jefferson",
+    "This country will not be a good place for any of us to live in unless we make it a good place for all of us to live in. - Theodore Roosevelt",
+    "Liberty is the possibility of doubting, the possibility of making a mistake, the possibility of searching and experimenting, the possibility of saying No to any authority — literary, artistic, philosophic, religious, social, and even political. - Ignazio Silone",
+    "I am a firm believer in the people. If given the truth, they can be depended upon to meet any national crisis. The great point is to bring them the real facts. - Abraham Lincoln",
+    "America was not built on fear. America was built on courage, on imagination, and an unbeatable determination to do the job at hand. - Harry S. Truman",
+    "The flag is the embodiment, not of sentiment, but of history. - Woodrow Wilson",
+    "Liberty is the breath of life to nations. - George Bernard Shaw",
+    "Those who deny freedom to others deserve it not for themselves. - Abraham Lincoln"
+    ];
+
+    // Function to display a random quote
+    function displayRandomQuote() {
+        var randomIndex = Math.floor(Math.random() * quotes.length);
+        var quoteElement = document.getElementById("quote");
+        quoteElement.textContent = quotes[randomIndex];
+    }
+
+    // Display a random quote when the page loads
+    displayRandomQuote();
+    </script> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Embedded YouTube Audio</title> <iframe width="560" height="315" src="https://www.youtube.com/embed/ZXbbEA26Ec4?autoplay=0&amp;controls=0&amp;loop=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> 
+ </body>
+</html>
